@@ -14,8 +14,18 @@ public class Operation {
     private Date data;
     @Column
     private BigDecimal amount;
+    @Column
+    private Integer type;
 
     public Operation() {
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getId() {

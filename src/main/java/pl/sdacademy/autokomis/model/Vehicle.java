@@ -28,8 +28,28 @@ public class Vehicle {
     private String description;
     @Column
     private Integer testDriveCounter;
+    @Column
+    private Integer status;
+    @Column
+    private Integer productionDate;
 
     public Vehicle() {
+    }
+
+    public Integer getProductionDate() {
+        return productionDate;
+    }
+
+    public void setProductionDate(Integer productionDate) {
+        this.productionDate = productionDate;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getId() {
