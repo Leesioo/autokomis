@@ -17,6 +17,7 @@
             <th scope="col">Data produkcji</th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -26,11 +27,14 @@
             <td th:text="${vehicle.model}">a</td>
             <td th:text="${vehicle.vin}">a</td>
             <td th:text="${vehicle.productionDate}">a</td>
-            <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/sell'}" th:text="${'(sprzedaj)'}"></a></td>
+            <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/buy'}" th:text="${'(kup)'}"></a></td>
             <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/edit'}" th:text="${'(edytuj)'}"></a></td>
+            <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/delete'}" th:text="${'(skasuj)'}"></a></td>
         </tr>
         </tbody>
     </table>
+    <br>
+    <a th:href="@{'/vehicle/add'}" th:text="${'dodaj nowy pojazd'}"></a>
 </main>
 </body>
 </html>

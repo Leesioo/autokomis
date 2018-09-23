@@ -22,16 +22,23 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
+    @GetMapping("/toBuyList")
+    public String showToBuyList(Model model) {
+        List<Vehicle> vehicles = vehicleService.findAllByStatus(0);
+        model.addAttribute("vehicles", vehicles);
+        return "vehicle/toBuyList";
+    }
+
     @GetMapping("/toSaleList")
     public String showToSaleList(Model model) {
-        List<Vehicle> vehicles = vehicleService.findAllByStatus(0);
+        List<Vehicle> vehicles = vehicleService.findAllByStatus(1);
         model.addAttribute("vehicles", vehicles);
         return "vehicle/toSaleList";
     }
 
     @GetMapping("/soldList")
     public String showSoldList(Model model) {
-        List<Vehicle> vehicles = vehicleService.findAllByStatus(1);
+        List<Vehicle> vehicles = vehicleService.findAllByStatus(2);
         model.addAttribute("vehicles", vehicles);
         return "vehicle/soldList";
     }
@@ -52,10 +59,46 @@ public class VehicleController {
         return "vehicle/edit";
     }
 
+    @GetMapping("/{id}/buy")
+    public String buyVehicle(@PathVariable("id") Integer id, Model model) {
+        Optional<Vehicle> first = vehicleService.findById(id);
+        if (!first.isPresent()) {
+            throw new WrongObjectException("Nie ma takiego pojazdu");
+        }
+        if (first.get().getStatus() == 0) {
+            first.get().setStatus(1);
+            vehicleService.save(first.get());
+        }
+        return "redirect:/vehicle/toBuyList";
+    }
+
+    @GetMapping("/{id}/sell")
+    public String sellVehicle(@PathVariable("id") Integer id, Model model) {
+        Optional<Vehicle> first = vehicleService.findById(id);
+        if (!first.isPresent()) {
+            throw new WrongObjectException("Nie ma takiego pojazdu");
+        }
+        if (first.get().getStatus() == 1) {
+            first.get().setStatus(2);
+            vehicleService.save(first.get());
+        }
+        return "redirect:/vehicle/toSaleList";
+    }
+
     @PostMapping("/save")
     public String saveVehicle(@ModelAttribute("vehicle") Vehicle vehicle) {
+        Integer typ = vehicle.getStatus();
         vehicleService.save(vehicle);
-        return "redirect:/vehicle/list";
+        switch (typ) {
+            case 0:
+                return "redirect:/vehicle/toBuyList";
+            case 1:
+                return "redirect:/vehicle/toSaleList";
+            case 2:
+                return "redirect:/vehicle/soldList";
+            default:
+                return "redirect:/";
+        }
     }
 
     @GetMapping("/{id}/delete")

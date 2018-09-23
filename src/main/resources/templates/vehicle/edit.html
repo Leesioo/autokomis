@@ -22,19 +22,47 @@
         </tr>
         <tr>
             <th scope="row">Marka</th>
-            <td><input type="text" th:field="*{firm}"/></td>
+            <td><input type="text" th:field="*{brand}"/></td>
         </tr>
         <tr>
             <th scope="row">Model</th>
             <td><input type="text" th:field="*{model}"/></td>
         </tr>
         <tr>
-            <th scope="row">Nr rej</th>
-            <td><input type="text" th:field="*{registrationNumber}"/></td>
+            <th scope="row">VIN</th>
+            <td><input type="text" th:field="*{vin}"/></td>
         </tr>
         <tr>
             <th scope="row">Data prod.</th>
             <td><input type="text" th:field="*{productionDate}"/></td>
+        </tr>
+        <tr>
+            <th scope="row">Pojemność</th>
+            <td><input type="number" th:field="*{capacity}"/></td>
+        </tr>
+        <tr>
+            <th scope="row">Moc</th>
+            <td><input type="number" th:field="*{horsePower}"/></td>
+        </tr>
+        <tr>
+            <th scope="row">Rodzaj paliwa</th>
+            <td><input type="text" th:field="*{fuelType}"/></td>
+        </tr>
+        <tr>
+            <th scope="row">Przebieg</th>
+            <td><input type="number" th:field="*{mileage}"/></td>
+        </tr>
+        <tr>
+            <th scope="row">Skrzynia biegów</th>
+            <td><input type="text" th:field="*{gearType}"/></td>
+        </tr>
+        <tr>
+            <th scope="row">Opis</th>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <th scope="row">Status</th>
+            <td><input type="text" th:field="*{status}" readonly="readonly"/></td>
         </tr>
         </tbody>
     </table>

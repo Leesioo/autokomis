@@ -27,9 +27,9 @@ public class Vehicle {
     @Column
     private String description;
     @Column
-    private Integer testDriveCounter;
+    private Integer testDriveCounter = 0;
     @Column
-    private Integer status;
+    private Integer status = 0;
     @Column
     private Integer productionDate;
 
