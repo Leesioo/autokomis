@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="index">
+<head>
+    <meta charset="UTF-8">
+    <title>Wszystko w jednym</title>
+</head>
+<body>
+<main role="main" layout:fragment="container" class="container">
+    <form method="post" th:action="@{/operation/buy}" th:object="${operationDto}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Dane pojazdu</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Id pojazdu</th>
+                <td><input type="text" th:field="*{vehicleId}" readonly="readonly"/></td>
+                <th scope="row">VIN</th>
+                <td><input type="text" th:field="*{vehicleVin}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Marka</th>
+                <td><input type="text" th:field="*{vehicleBrand}" readonly="readonly"/></td>
+                <th scope="row">Model</th>
+                <td><input type="text" th:field="*{vehicleModel}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Pojemność silnika</th>
+                <td><input type="text" th:field="*{vehicleCapacity}" readonly="readonly"/></td>
+                <th scope="row">Moc</th>
+                <td><input type="text" th:field="*{vehicleHorsePower}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Paliwo</th>
+                <td><input type="text" th:field="*{vehicleFuelType}" readonly="readonly"/></td>
+                <th scope="row">Przebieg</th>
+                <td><input type="text" th:field="*{vehicleMileage}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Skrzynia biegów</th>
+                <td><input type="text" th:field="*{vehicleGearType}" readonly="readonly"/></td>
+                <th scope="row">Rok produkcji</th>
+                <td><input type="text" th:field="*{vehicleProductionDate}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Opis</th>
+                <td><input type="text" th:field="*{vehicleDescription}" readonly="readonly"/></td>
+                <th scope="row"></th>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Dane klienta</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Id klienta</th>
+                <td><input type="text" th:field="*{customerId}" readonly="readonly"/></td>
+                <th scope="row">Pesel</th>
+                <td><input type="text" th:field="*{customerPesel}"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Nazwisko</th>
+                <td><input type="text" th:field="*{customerName}"/></td>
+                <th scope="row">Imię</th>
+                <td><input type="text" th:field="*{customerFirstName}"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Adres</th>
+                <td><input type="text" th:field="*{customerAddress}"/></td>
+                <th scope="row">NIP</th>
+                <td><input type="text" th:field="*{customerNip}"/></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Parametry zakupu</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Id operacji</th>
+                <td><input type="text" th:field="*{operationId}" readonly="readonly"/></td>
+                <th scope="row">Typ</th>
+                <td><input type="text" th:field="*{operationType}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Data</th>
+                <td><input type="text" th:field="*{operationData}"/></td>
+                <th scope="row">Wartość transakcji</th>
+                <td><input type="text" th:field="*{operationValue}"/></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="submit" value="OK"/>
+    </form>
+</main>
+</body>
+</html>

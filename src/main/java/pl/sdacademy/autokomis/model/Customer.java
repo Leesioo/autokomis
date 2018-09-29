@@ -1,5 +1,7 @@
 package pl.sdacademy.autokomis.model;
 
+import pl.sdacademy.autokomis.dto.OperationDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,15 @@ public class Customer {
     private String pesel;
 
     public Customer() {
+    }
+
+    public Customer(OperationDto operationDto) {
+        this.id = operationDto.getCustomerId();
+        this.name = operationDto.getCustomerName();
+        this.firstName = operationDto.getCustomerFirstName();
+        this.address = operationDto.getCustomerAddress();
+        this.nip = operationDto.getCustomerNip();
+        this.pesel = operationDto.getCustomerPesel();
     }
 
     public Integer getId() {

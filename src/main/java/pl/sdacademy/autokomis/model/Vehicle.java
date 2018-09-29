@@ -1,5 +1,7 @@
 package pl.sdacademy.autokomis.model;
 
+import pl.sdacademy.autokomis.dto.OperationDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -34,6 +36,20 @@ public class Vehicle {
     private Integer productionDate;
 
     public Vehicle() {
+    }
+
+    public Vehicle(OperationDto operationDto) {
+        this.id = operationDto.getVehicleId();
+        this.vin = operationDto.getVehicleVin();
+        this.brand = operationDto.getVehicleBrand();
+        this.model = operationDto.getVehicleModel();
+        this.capacity = operationDto.getVehicleCapacity();
+        this.horsePower = operationDto.getVehicleHorsePower();
+        this.fuelType = operationDto.getVehicleFuelType();
+        this.mileage = operationDto.getVehicleMileage();
+        this.gearType = operationDto.getVehicleGearType();
+        this.description = operationDto.getVehicleDescription();
+        this.productionDate = operationDto.getVehicleProductionDate();
     }
 
     public Integer getProductionDate() {

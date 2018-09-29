@@ -35,10 +35,22 @@ public class CustomerService {
     }
 
     public Customer update(Customer customer) {
-        return customerRepository.findAll().stream()
-                .filter(c -> c.getName().equals(customer.getName()))
-                .filter(c -> c.getFirstName().equals(customer.getFirstName()))
-                .findFirst()
-                .orElse(customer);
+        if (!customer.getPesel().equals("")) {
+            return customerRepository.findAll().stream()
+                    .filter(c -> c.getPesel().equals(customer.getPesel()))
+                    .findFirst()
+                    .orElse(customer);
+        } else if (!customer.getNip().equals("")) {
+            return customerRepository.findAll().stream()
+                    .filter(c -> c.getNip().equals(customer.getNip()))
+                    .findFirst()
+                    .orElse(customer);
+        } else {
+            return customerRepository.findAll().stream()
+                    .filter(c -> c.getName().equals(customer.getName()))
+                    .filter(c -> c.getFirstName().equals(customer.getFirstName()))
+                    .findFirst()
+                    .orElse(customer);
+        }
     }
 }

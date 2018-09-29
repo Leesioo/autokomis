@@ -1,10 +1,14 @@
 package pl.sdacademy.autokomis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.sdacademy.autokomis.dto.OperationDto;
 import pl.sdacademy.autokomis.exceptions.WrongObjectException;
+import pl.sdacademy.autokomis.model.Customer;
+import pl.sdacademy.autokomis.model.Operation;
 import pl.sdacademy.autokomis.model.Vehicle;
 import pl.sdacademy.autokomis.services.VehicleService;
 
@@ -61,15 +65,25 @@ public class VehicleController {
 
     @GetMapping("/{id}/buy")
     public String buyVehicle(@PathVariable("id") Integer id, Model model) {
-        Optional<Vehicle> first = vehicleService.findById(id);
-        if (!first.isPresent()) {
+        Optional<Vehicle> vehicle = vehicleService.findById(id);
+        if (!vehicle.isPresent()) {
             throw new WrongObjectException("Nie ma takiego pojazdu");
         }
-        if (first.get().getStatus() == 0) {
-            first.get().setStatus(1);
-            vehicleService.save(first.get());
-        }
-        return "redirect:/vehicle/toBuyList";
+        Operation operation = new Operation();
+        operation.setType(1);
+        OperationDto operationDto = new OperationDto(vehicle.get(), new Customer(), operation);
+        model.addAttribute("operationDto", operationDto);
+        return "operation/buy";
+
+
+
+
+
+//        if (vehicle.get().getStatus() == 0) {
+//            vehicle.get().setStatus(1);
+//            vehicleService.save(vehicle.get());
+//        }
+//        return "redirect:/vehicle/toBuyList";
     }
 
     @GetMapping("/{id}/sell")
@@ -88,7 +102,11 @@ public class VehicleController {
     @PostMapping("/save")
     public String saveVehicle(@ModelAttribute("vehicle") Vehicle vehicle) {
         Integer typ = vehicle.getStatus();
-        vehicleService.save(vehicle);
+        try {
+            vehicleService.save(vehicle);
+        } catch (Exception e){
+            throw new WrongObjectException("Coś nie tak");
+        }
         switch (typ) {
             case 0:
                 return "redirect:/vehicle/toBuyList";

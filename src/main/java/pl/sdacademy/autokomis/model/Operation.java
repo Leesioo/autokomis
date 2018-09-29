@@ -1,5 +1,7 @@
 package pl.sdacademy.autokomis.model;
 
+import pl.sdacademy.autokomis.dto.OperationDto;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,11 +15,23 @@ public class Operation {
     @Column
     private Date data;
     @Column
-    private BigDecimal amount;
+    private BigDecimal value;
     @Column
     private Integer type;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Operation() {
+    }
+
+    public Operation(OperationDto operationDto) {
+        this.id = operationDto.getOperationId();
+        this.value = operationDto.getOperationValue();
+        this.type = operationDto.getOperationType();
     }
 
     public Integer getType() {
@@ -44,11 +58,27 @@ public class Operation {
         this.data = data;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getValue() {
+        return value;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
