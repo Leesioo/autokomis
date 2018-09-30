@@ -18,6 +18,7 @@
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
             <td th:text="${vehicle.vin}">a</td>
             <td th:text="${vehicle.productionDate}">a</td>
             <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/buy'}" th:text="${'(kup)'}"></a></td>
+            <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/lend'}" th:text="${'(wystaw)'}"></a></td>
             <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/edit'}" th:text="${'(edytuj)'}"></a></td>
             <td><a th:href="@{'/vehicle/'+${vehicle.id}+'/delete'}" th:text="${'(skasuj)'}"></a></td>
         </tr>

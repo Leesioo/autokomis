@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="index">
+<head>
+    <meta charset="UTF-8">
+    <title>Raport sprzedaży</title>
+</head>
+<body>
+<main role="main" layout:fragment="container" class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Marka</th>
+            <th scope="col">Model</th>
+            <th scope="col">VIN</th>
+            <th scope="col">Cena zakupu</th>
+            <th scope="col">Cena sprzedaży</th>
+            <th scope="col">Prowizja</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sold : ${soldList}"}>
+            <th scope="row" th:text="${sold.vehicleId}">1</th>
+            <td th:text="${sold.vehicleBrand}">a</td>
+            <td th:text="${sold.vehicleModel}">a</td>
+            <td th:text="${sold.vehicleVin}">a</td>
+            <td th:text="${sold.cenaZakupu}">a</td>
+            <td th:text="${sold.operationValue}">a</td>
+            <td th:text="${sold.prowizja}">a</td>
+            <td><a th:href="@{'/report/sold/'+${sold.operationId}+'/details'}" th:text="${'(szczegóły)'}"></a></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

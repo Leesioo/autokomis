@@ -3,6 +3,7 @@ package pl.sdacademy.autokomis.model;
 import pl.sdacademy.autokomis.dto.OperationDto;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "vehicles")
@@ -34,6 +35,8 @@ public class Vehicle {
     private Integer status = 0;
     @Column
     private Integer productionDate;
+    @Column
+    private BigDecimal value;
 
     public Vehicle() {
     }
@@ -50,6 +53,15 @@ public class Vehicle {
         this.gearType = operationDto.getVehicleGearType();
         this.description = operationDto.getVehicleDescription();
         this.productionDate = operationDto.getVehicleProductionDate();
+        this.value = operationDto.getVehicleValue();
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
     }
 
     public Integer getProductionDate() {

@@ -35,6 +35,10 @@ public class CustomerService {
     }
 
     public Customer update(Customer customer) {
+        if ((customer.getId() != null) && (customer.getId() > 0)) {
+            return customerRepository.findById(customer.getId())
+                    .orElse(customer);
+        }
         if (!customer.getPesel().equals("")) {
             return customerRepository.findAll().stream()
                     .filter(c -> c.getPesel().equals(customer.getPesel()))

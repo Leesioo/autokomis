@@ -4,13 +4,16 @@ import pl.sdacademy.autokomis.model.Customer;
 import pl.sdacademy.autokomis.model.Operation;
 import pl.sdacademy.autokomis.model.Vehicle;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class OperationDto {
     private Integer vehicleId;
+   @NotEmpty
+   @NotNull
     private String vehicleVin;
     private String vehicleBrand;
     private String vehicleModel;
@@ -21,6 +24,7 @@ public class OperationDto {
     private String vehicleGearType;
     private String vehicleDescription;
     private Integer vehicleProductionDate;
+    private BigDecimal vehicleValue;
     private Integer customerId;
     private String customerName;
     private String customerFirstName;
@@ -52,6 +56,7 @@ public class OperationDto {
         this.vehicleGearType = vehicle.getGearType();
         this.vehicleDescription = vehicle.getDescription();
         this.vehicleProductionDate = vehicle.getProductionDate();
+        this.vehicleValue = vehicle.getValue();
         this.customerId = customer.getId();
         this.customerName = customer.getName();
         this.customerFirstName = customer.getFirstName();
@@ -65,6 +70,14 @@ public class OperationDto {
     }
 
     public OperationDto() {
+    }
+
+    public BigDecimal getVehicleValue() {
+        return vehicleValue;
+    }
+
+    public void setVehicleValue(BigDecimal vehicleValue) {
+        this.vehicleValue = vehicleValue;
     }
 
     public Integer getVehicleId() {

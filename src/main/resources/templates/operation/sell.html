@@ -7,7 +7,7 @@
 </head>
 <body>
 <main role="main" layout:fragment="container" class="container">
-    <form method="post" th:action="@{/operation/buy}" th:object="${operationDto}">
+    <form method="post" th:action="@{/operation/sell}" th:object="${operationDto}">
         <table class="table">
             <thead>
             <tr>
@@ -60,7 +60,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Dane klienta</th>
+                <th scope="col">Dane kuopującego</th>
                 <th scope="col"></th>
             </tr>
             </thead>

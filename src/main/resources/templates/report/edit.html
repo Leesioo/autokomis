@@ -7,11 +7,11 @@
 </head>
 <body>
 <main role="main" layout:fragment="container" class="container">
-    <form method="post" th:action="@{/operation/buy}" th:object="${operationDto}">
+    <form method="post" th:action="@{/}" th:object="${operation}">
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Dane pojazdu</th>
+                <th scope="col">Szczegóły transakcji</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -66,31 +66,16 @@
             </thead>
             <tbody>
             <tr>
-                <th scope="row">Wybierz klienta</th>
-                <td>
-                    <div th:if="${customerId != null }">
-                        <select name="customer.id" th:field="*{customerId}">
-                            <option th:each="choice : ${customersList}"
-                                    th:value="${choice.id}"
-                                    th:attr="choicecustomerId=${choice.id}, institutioninstitutionId=*{customerId}, showselected=(${choice.id} == *{customerId})"
-                                    th:selected="(${choice.id} == *{customerId})"
-                                    th:readonly="(${choice.id} == *{customerId})"
-                                    th:text="${choice.firstName + ' ' + choice.Name}"></option>
-                        </select>
-                    </div>
-                    <div th:if="${customerId == null }">
-                        <div th:if="${customersList != null and not #lists.isEmpty(customersList)}">
-                            <select name="customer.id" th:field="*{customerId}">
-                                <option th:each="dropDownItem : ${customersList}"
-                                        th:value="${dropDownItem.id}"
-                                        th:text="${dropDownItem.firstName + ' ' + dropDownItem.Name}" />
-                            </select>
-                        </div>
-                        <div th:if="${customersList == null or #lists.isEmpty(customersList)}">
-                            <div>"No Customers were found, please add some first"</div>
-                        </div>
-                    </div>
-                </td>
+                <th scope="row">Imię</th>
+                <td><input type="text" th:field="*{customerFirstName}" readonly="readonly"/></td>
+                <th scope="row">Nazwisko</th>
+                <td><input type="text" th:field="*{customerName}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Pesel</th>
+                <td><input type="text" th:field="*{customerPesel}" readonly="readonly"/></td>
+                <th scope="row">NIP</th>
+                <td><input type="text" th:field="*{customerNip}" readonly="readonly"/></td>
             </tr>
             </tbody>
         </table>
@@ -113,15 +98,18 @@
             </tr>
             <tr>
                 <th scope="row">Data</th>
-                <td><input type="text" th:field="*{operationData}"/></td>
+                <td><input type="text" th:field="*{operationData}" readonly="readonly"/></td>
                 <th scope="row">Wartość transakcji</th>
-                <td><input type="text" th:field="*{operationValue}" />
-                    <span th:if="${#fields.hasErrors('operationValue')}" th:errors="*{operationValue}" class="text-danger help-block" />
-                </td>
+                <td><input type="text" th:field="*{operationValue}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Cena zakupu</th>
+                <td><input type="text" th:field="*{cenaZakupu}" readonly="readonly"/></td>
+                <th scope="row">Prowizja</th>
+                <td><input type="text" th:field="*{prowizja}" readonly="readonly"/></td>
             </tr>
             </tbody>
         </table>
-        <input type="submit" value="OK"/>
     </form>
 </main>
 </body>

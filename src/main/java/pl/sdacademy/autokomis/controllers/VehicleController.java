@@ -10,6 +10,7 @@ import pl.sdacademy.autokomis.exceptions.WrongObjectException;
 import pl.sdacademy.autokomis.model.Customer;
 import pl.sdacademy.autokomis.model.Operation;
 import pl.sdacademy.autokomis.model.Vehicle;
+import pl.sdacademy.autokomis.services.CustomerService;
 import pl.sdacademy.autokomis.services.VehicleService;
 
 import java.util.List;
@@ -20,10 +21,12 @@ import java.util.Optional;
 public class VehicleController {
 
     private final VehicleService vehicleService;
+    private final CustomerService customerService;
 
     @Autowired
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, CustomerService customerService) {
         this.vehicleService = vehicleService;
+        this.customerService = customerService;
     }
 
     @GetMapping("/toBuyList")
@@ -65,38 +68,34 @@ public class VehicleController {
 
     @GetMapping("/{id}/buy")
     public String buyVehicle(@PathVariable("id") Integer id, Model model) {
+        return takeVehicle(id, model, 1);
+    }
+
+    @GetMapping("/{id}/lend")
+    public String lendVehicle(@PathVariable("id") Integer id, Model model) {
+        return takeVehicle(id, model, 3);
+    }
+
+    private String takeVehicle(@PathVariable("id") Integer id, Model model, int operationType) {
         Optional<Vehicle> vehicle = vehicleService.findById(id);
         if (!vehicle.isPresent()) {
             throw new WrongObjectException("Nie ma takiego pojazdu");
         }
         Operation operation = new Operation();
-        operation.setType(1);
+        operation.setType(operationType);
         OperationDto operationDto = new OperationDto(vehicle.get(), new Customer(), operation);
         model.addAttribute("operationDto", operationDto);
-        return "operation/buy";
-
-
-
-
-
-//        if (vehicle.get().getStatus() == 0) {
-//            vehicle.get().setStatus(1);
-//            vehicleService.save(vehicle.get());
-//        }
-//        return "redirect:/vehicle/toBuyList";
+        model.addAttribute("customersList", customerService.findAll());
+        if (operationType == 2) {
+            return "operation/sell";
+        } else {
+            return "operation/buy";
+        }
     }
 
     @GetMapping("/{id}/sell")
     public String sellVehicle(@PathVariable("id") Integer id, Model model) {
-        Optional<Vehicle> first = vehicleService.findById(id);
-        if (!first.isPresent()) {
-            throw new WrongObjectException("Nie ma takiego pojazdu");
-        }
-        if (first.get().getStatus() == 1) {
-            first.get().setStatus(2);
-            vehicleService.save(first.get());
-        }
-        return "redirect:/vehicle/toSaleList";
+        return takeVehicle(id, model, 2);
     }
 
     @PostMapping("/save")
