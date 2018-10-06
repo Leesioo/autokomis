@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.sdacademy.autokomis.dto.BuysReportDto;
+import pl.sdacademy.autokomis.dto.OperationDto;
 import pl.sdacademy.autokomis.dto.SalesReportDto;
 import pl.sdacademy.autokomis.exceptions.WrongObjectException;
 import pl.sdacademy.autokomis.model.Operation;
@@ -56,4 +58,27 @@ public class ReportController {
         model.addAttribute("operation", new SalesReportDto(first.get(), operationService));
         return "report/edit";
     }
+
+    @GetMapping("/buyList")
+    public String showBuyList(Model model, Pageable pageable) {
+        List<BuysReportDto> report = new ArrayList<>();
+        List<Operation> buyOperations = operationService.findAllByType(1);
+        buyOperations.forEach(o -> report.add(new BuysReportDto(o, operationService)));
+        model.addAttribute("buyList", report);
+        return "report/buyList";
+    }
+
+    @GetMapping("/buy/{id}/details")
+    public String showBuyReportDetails(@PathVariable("id") Integer id, Model model) {
+        Optional<Operation> first = operationService.findById(id);
+        if (!first.isPresent()) {
+            throw new WrongObjectException("Nie ma takiej operacji");
+        }
+        model.addAttribute("operation", new SalesReportDto(first.get(), operationService));
+        return "report/edit";
+    }
+
+
+
+
 }

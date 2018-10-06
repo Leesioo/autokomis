@@ -99,12 +99,12 @@
             <tr>
                 <th scope="row">Data</th>
                 <td><input type="text" th:field="*{operationData}" readonly="readonly"/></td>
-                <th scope="row">Wartość transakcji</th>
-                <td><input type="text" th:field="*{operationValue}" readonly="readonly"/></td>
-            </tr>
-            <tr>
                 <th scope="row">Cena zakupu</th>
                 <td><input type="text" th:field="*{cenaZakupu}" readonly="readonly"/></td>
+            </tr>
+            <tr th:if="*{operationType} == 2">
+                <th scope="row">Wartość transakcji</th>
+                <td><input type="text" th:field="*{operationValue}" readonly="readonly"/></td>
                 <th scope="row">Prowizja</th>
                 <td><input type="text" th:field="*{prowizja}" readonly="readonly"/></td>
             </tr>
