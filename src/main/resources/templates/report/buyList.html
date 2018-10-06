@@ -3,7 +3,7 @@
       layout:decorate="index">
 <head>
     <meta charset="UTF-8">
-    <title>Raport sprzedaży</title>
+    <title>Raport zakupówy</title>
 </head>
 <body>
 <main role="main" layout:fragment="container" class="container">
@@ -15,40 +15,31 @@
             <th scope="col">Model</th>
             <th scope="col">VIN</th>
             <th scope="col">Cena zakupu</th>
-            <th scope="col">Cena sprzedaży</th>
-            <th scope="col">Prowizja</th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="sold : ${soldList}"}>
-            <th scope="row" th:text="${sold.vehicleId}">1</th>
-            <td th:text="${sold.vehicleBrand}">a</td>
-            <td th:text="${sold.vehicleModel}">a</td>
-            <td th:text="${sold.vehicleVin}">a</td>
-            <td th:text="${sold.cenaZakupu}">a</td>
-            <td th:text="${sold.operationValue}">a</td>
-            <td th:text="${sold.prowizja}">a</td>
-            <td><a th:href="@{'/report/sold/'+${sold.operationId}+'/details'}" th:text="${'(szczegóły)'}"></a></td>
+        <tr th:each="buy : ${buyList}"}>
+            <th scope="row" th:text="${buy.vehicleId}">1</th>
+            <td th:text="${buy.vehicleBrand}">a</td>
+            <td th:text="${buy.vehicleModel}">a</td>
+            <td th:text="${buy.vehicleVin}">a</td>
+            <td th:text="${buy.operationValue}">a</td>
+            <td><a th:href="@{'/report/buy/'+${buy.operationId}+'/details'}" th:text="${'(szczegóły)'}"></a></td>
         </tr>
         </tbody>
     </table>
-
     <table class="table">
         <thead>
         <tr>
             <th scope="col">Podsumowanie strony</th>
             <th scope="col">Wartość zakupu</th>
-            <th scope="col">Wartość sprzedaży</th>
-            <th scope="col">Wartość prowizji</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <th scope="row"></th>
-            <td th:text="${soldSummary.purchase}">a</td>
-            <td th:text="${soldSummary.sale}">a</td>
-            <td th:text="${soldSummary.commission}">a</td>
+            <td th:text="${buySummary.purchase}">a</td>
         </tr>
         </tbody>
     </table>
@@ -57,16 +48,12 @@
         <tr>
             <th scope="col">Podsumowanie miesiąca</th>
             <th scope="col">Wartość zakupu</th>
-            <th scope="col">Wartość sprzedaży</th>
-            <th scope="col">Wartość prowizji</th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <th scope="row"></th>
-            <td th:text="${soldSummary.purchase}">a</td>
-            <td th:text="${soldSummary.sale}">a</td>
-            <td th:text="${soldSummary.commission}">a</td>
+            <td th:text="${buySummary.purchase}">a</td>
         </tr>
         </tbody>
     </table>

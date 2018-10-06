@@ -1,16 +1,13 @@
 package pl.sdacademy.autokomis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.sdacademy.autokomis.dto.BuysReportDto;
-import pl.sdacademy.autokomis.dto.OperationDto;
-import pl.sdacademy.autokomis.dto.SalesReportDto;
+import pl.sdacademy.autokomis.dto.*;
 import pl.sdacademy.autokomis.exceptions.WrongObjectException;
 import pl.sdacademy.autokomis.model.Operation;
 import pl.sdacademy.autokomis.services.CustomerService;
@@ -18,10 +15,10 @@ import pl.sdacademy.autokomis.services.OperationService;
 import pl.sdacademy.autokomis.services.VehicleService;
 import pl.sdacademy.autokomis.validator.OperationValidator;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/report")
@@ -46,7 +43,37 @@ public class ReportController {
         List<Operation> soldOperations = operationService.findAllByType(2);
         soldOperations.forEach(o -> report.add(new SalesReportDto(o, operationService)));
         model.addAttribute("soldList", report);
+        model.addAttribute("soldSummary", getSoldSummary(report));
         return "report/soldList";
+    }
+
+    private SaleSummaryDto getSoldSummary(List<SalesReportDto> report) {
+        SaleSummaryDto saleSummaryDto = new SaleSummaryDto();
+        saleSummaryDto.setCommission(getCommissionSummary(report));
+        saleSummaryDto.setPurchase(getPurchaseSummary(report));
+        saleSummaryDto.setSale(getSaleSummary(report));
+        return saleSummaryDto;
+    }
+
+    private BigDecimal getSaleSummary(List<SalesReportDto> report) {
+        BigDecimal sale = report.stream()
+                .map(s -> s.getOperationValue())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return sale;
+    }
+
+    private BigDecimal getPurchaseSummary(List<SalesReportDto> report) {
+        BigDecimal purchase = report.stream()
+                .map(s -> s.getCenaZakupu())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return purchase;
+    }
+
+    private BigDecimal getCommissionSummary(List<SalesReportDto> report) {
+        BigDecimal commission = report.stream()
+                .map(s -> s.getProwizja())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return commission;
     }
 
     @GetMapping("/sold/{id}/details")
@@ -65,7 +92,21 @@ public class ReportController {
         List<Operation> buyOperations = operationService.findAllByType(1);
         buyOperations.forEach(o -> report.add(new BuysReportDto(o, operationService)));
         model.addAttribute("buyList", report);
+        model.addAttribute("buySummary", getBuySummary(report));
         return "report/buyList";
+    }
+
+    private BuySummaryDto getBuySummary(List<BuysReportDto> report) {
+        BuySummaryDto buySummaryDto = new BuySummaryDto();
+        buySummaryDto.setPurchase(this.getPurchaseSummaryForPurchaseReport(report));
+        return buySummaryDto;
+    }
+
+    private BigDecimal getPurchaseSummaryForPurchaseReport(List<BuysReportDto> report) {
+        BigDecimal sale = report.stream()
+                .map(s -> s.getOperationValue())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return sale;
     }
 
     @GetMapping("/buy/{id}/details")
