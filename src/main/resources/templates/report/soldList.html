@@ -52,24 +52,8 @@
         </tr>
         </tbody>
     </table>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Podsumowanie miesiąca</th>
-            <th scope="col">Wartość zakupu</th>
-            <th scope="col">Wartość sprzedaży</th>
-            <th scope="col">Wartość prowizji</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row"></th>
-            <td th:text="${soldSummary.purchase}">a</td>
-            <td th:text="${soldSummary.sale}">a</td>
-            <td th:text="${soldSummary.commission}">a</td>
-        </tr>
-        </tbody>
-    </table>
+    <hr>
+    <a th:each="i : ${#numbers.sequence( 1, totalPages)}" th:if="${i != currentPage+1}" th:text="${'Strona '+i+' '}" th:href="@{'/report/soldList?page='+${i-1}+'&size='+${pageSize}}"></a>
 </main>
 </body>
 </html>

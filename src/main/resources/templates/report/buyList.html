@@ -3,7 +3,7 @@
       layout:decorate="index">
 <head>
     <meta charset="UTF-8">
-    <title>Raport zakupówy</title>
+    <title>Raport zakupowy</title>
 </head>
 <body>
 <main role="main" layout:fragment="container" class="container">
@@ -43,20 +43,8 @@
         </tr>
         </tbody>
     </table>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Podsumowanie miesiąca</th>
-            <th scope="col">Wartość zakupu</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row"></th>
-            <td th:text="${buySummary.purchase}">a</td>
-        </tr>
-        </tbody>
-    </table>
+    <hr>
+    <a th:each="i : ${#numbers.sequence( 1, totalPages)}" th:if="${i != currentPage+1}" th:text="${'Strona '+i+' '}" th:href="@{'/report/buyList?page='+${i-1}+'&size='+${pageSize}}"></a>
 </main>
 </body>
 </html>

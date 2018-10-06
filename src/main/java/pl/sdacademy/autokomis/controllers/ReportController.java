@@ -1,6 +1,8 @@
 package pl.sdacademy.autokomis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,10 +42,14 @@ public class ReportController {
     @GetMapping("/soldList")
     public String showSoldList(Model model, Pageable pageable) {
         List<SalesReportDto> report = new ArrayList<>();
-        List<Operation> soldOperations = operationService.findAllByType(2);
+        Page<Operation> soldOperations = operationService.findAllByType(2, pageable);
         soldOperations.forEach(o -> report.add(new SalesReportDto(o, operationService)));
+        PageImpl page = new PageImpl(report, pageable, soldOperations.getTotalElements());
         model.addAttribute("soldList", report);
         model.addAttribute("soldSummary", getSoldSummary(report));
+        model.addAttribute("totalPages" , page.getTotalPages());
+        model.addAttribute("pageSize", page.getPageable().getPageSize());
+        model.addAttribute("currentPage", page.getPageable().getPageNumber());
         return "report/soldList";
     }
 
@@ -89,10 +95,14 @@ public class ReportController {
     @GetMapping("/buyList")
     public String showBuyList(Model model, Pageable pageable) {
         List<BuysReportDto> report = new ArrayList<>();
-        List<Operation> buyOperations = operationService.findAllByType(1);
+        Page<Operation> buyOperations = operationService.findAllByType(1, pageable);
         buyOperations.forEach(o -> report.add(new BuysReportDto(o, operationService)));
-        model.addAttribute("buyList", report);
         model.addAttribute("buySummary", getBuySummary(report));
+        PageImpl page = new PageImpl(report, pageable, buyOperations.getTotalElements());
+        model.addAttribute("buyList", page);
+        model.addAttribute("totalPages" , page.getTotalPages());
+        model.addAttribute("pageSize", page.getPageable().getPageSize());
+        model.addAttribute("currentPage", page.getPageable().getPageNumber());
         return "report/buyList";
     }
 

@@ -10,7 +10,6 @@ import pl.sdacademy.autokomis.repositories.OperationRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OperationService {
@@ -33,10 +32,8 @@ public class OperationService {
         return operationRepository.findAll();
     }
 
-    public List<Operation> findAllByType(Integer type) {
-        return operationRepository.findAll().stream()
-                .filter(o -> o.getType() == type)
-                .collect(Collectors.toList());
+    public Page<Operation> findAllByType(Integer type, Pageable pageable) {
+        return operationRepository.findByType(type, pageable);
     }
 
     public Optional<Operation> findById(Integer id) {
