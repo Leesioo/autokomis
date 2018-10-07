@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="index">
+<head>
+    <meta charset="UTF-8">
+    <title>Raport sprzedaży</title>
+</head>
+<body>
+<main role="main" layout:fragment="container" class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Typ operacji</th>
+            <th scope="col">Data operacji</th>
+            <th scope="col">Wartość operacji</th>
+            <th scope="col">Dane klienta</th>
+            <th scope="col">Dane pojazdu</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="data : ${sqlReport}"}>
+            <th scope="row" th:text="${data.operationType}">1</th>
+            <td th:text="${data.operationDate}">a</td>
+            <td th:text="${data.operationValue}">a</td>
+            <td th:text="${data.customerData}">a</td>
+            <td th:text="${data.vehicleData}">a</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

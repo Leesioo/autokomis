@@ -53,6 +53,13 @@ public class ReportController {
         return "report/soldList";
     }
 
+    @GetMapping("/sqlList")
+    public String showSQLList(Model model, Pageable pageable) {
+        List<OperationsReportDto> report = operationService.getOperationsPerMonth();
+        model.addAttribute("sqlReport", report);
+        return "report/sqlReportList";
+    }
+
     private SaleSummaryDto getSoldSummary(List<SalesReportDto> report) {
         SaleSummaryDto saleSummaryDto = new SaleSummaryDto();
         saleSummaryDto.setCommission(getCommissionSummary(report));
